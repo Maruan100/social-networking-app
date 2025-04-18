@@ -6,25 +6,25 @@ import { reading } from './services/reading';
 import { following } from './services/following';
 import { wall } from './services/wall';
 
+const commands = [
+    { condition: (input: string) => input.includes('->'), command: posting },
+    { condition: (input: string) => input.includes('follows'), command: following },
+    { condition: (input: string) => input.includes('wall'), command: wall },
+    { condition: (input: string) => !input.includes('->'), command: reading },
+];
+
 export async function main(): Promise<void> {
     const rl = readline.createInterface({ input, output });
     const answer: string = await rl.question('> ');
     rl.close();
 
-    if (answer.includes('->')) {
-        await posting(answer)
-    } else if (answer.includes('follows')) {
-        await following(answer)
-    }
-    else if (answer.includes('wall')) {
-        await wall(answer)
-    }
-    else if (!answer.includes('->')) {
-        await reading(answer)
+    const matchedCommands = commands.find(({ condition }) => condition(answer));
+
+    if (matchedCommands) {
+        await matchedCommands.command(answer);
     } else {
         return await main();
     }
-
 }
 
 console.clear();
