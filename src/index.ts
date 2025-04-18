@@ -2,6 +2,7 @@
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { posting } from './services/posting';
+import { reading } from './services/reading';
 
 export async function main(): Promise<void> {
     const rl = readline.createInterface({ input, output });
@@ -9,7 +10,7 @@ export async function main(): Promise<void> {
     rl.close();
 
     if (answer.includes('->')) {
-        posting(answer)
+        await posting(answer)
     } else if (answer.includes('follows')) {
         // following()
         console.log('following')
@@ -19,8 +20,7 @@ export async function main(): Promise<void> {
         console.log('wall')
     }
     else if (!answer.includes('->')) {
-        // reading()
-        console.log('reading')
+        await reading(answer)
     } else {
         return await main();
     }
