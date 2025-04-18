@@ -8,4 +8,8 @@ export class Publication {
         this.text = text;
         this.createdAt = new Date();
     }
+
+    message(): string {
+        return `${this.text} (${this.createdAt})`;
+    }
 }

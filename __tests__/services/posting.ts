@@ -1,3 +1,5 @@
+import { posting } from "../../src/services/posting";
+
 jest.mock("../../src", () => ({
     ...jest.requireActual("../../src"),
     main: jest.fn(),
@@ -14,32 +16,35 @@ describe("Posting", () => {
         logSpy.mockRestore();
     });
 
-
     it("should log an error for empty input", async () => {
         const emptyInput = "";
 
-         //posting(emptyInput);
+        await posting(emptyInput);
 
-        expect(logSpy).toHaveBeenCalledWith("Error: Invalid format. Use 'user name -> text'");
+        expect(logSpy).toHaveBeenCalledWith(
+            "\x1b[31m%s\x1b[0m",
+            "Error: Invalid format. Use 'user name -> text'"
+        );
     });
 
-    
     it("should log an error for invalid input format", async () => {
         const invalidInput = "invalid input format";
 
-       //posting(invalidInput);
+        await posting(invalidInput);
 
-        expect(logSpy).toHaveBeenCalledWith("Error: Invalid format. Use 'user name -> text'");
+        expect(logSpy).toHaveBeenCalledWith("\x1b[31m%s\x1b[0m", "Error: Invalid format. Use 'user name -> text'");
     });
 
-
-    it("should log the input message", async () => {
+    it("should log the input message when input is valid", async () => {
         const validInput = "Alice -> I love the weather today";
-        const expectedOutput = "I love the weather today";
+        const expectedOutput = "I love the weather today (0 seconds ago)";
 
-        //posting(validInput);
+        await posting(validInput);
 
-        expect(logSpy).toHaveBeenCalledWith(expectedOutput);
-    })
-
-})
+        expect(logSpy).toHaveBeenCalledWith(
+            "\x1b[32m%s\x1b[0m",
+            expectedOutput
+        );
+    }
+    );
+});

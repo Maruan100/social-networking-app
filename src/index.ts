@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
+import { posting } from './services/posting';
 
 export async function main(): Promise<void> {
     const rl = readline.createInterface({ input, output });
@@ -8,8 +9,7 @@ export async function main(): Promise<void> {
     rl.close();
 
     if (answer.includes('->')) {
-        // posting()
-        console.log('posting')
+        posting(answer)
     } else if (answer.includes('follows')) {
         // following()
         console.log('following')
