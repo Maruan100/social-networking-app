@@ -1,3 +1,4 @@
+import { posting } from "../../src/services/posting";
 import { reading } from "../../src/services/reading";
 
 jest.mock("../../src", () => ({
@@ -27,7 +28,6 @@ describe("Reading", () => {
         );
     });
 
-
     it("should log an error for user that does not exist", async () => {
         const invalidInput = "Bob";
 
@@ -40,11 +40,12 @@ describe("Reading", () => {
     }
     );
 
-
     it("should log reading posts for valid user name", async () => {
         const validInput = "Alice";
         const expectedOutput = "I love the weather today (0 seconds ago)";
 
+        await posting("Alice -> I love the weather today");
+        await reading(validInput);
 
         expect(logSpy).toHaveBeenCalledWith(
             "\x1b[32m%s\x1b[0m",
