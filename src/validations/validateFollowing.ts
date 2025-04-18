@@ -23,5 +23,14 @@ export function validFollowingInput(input: string) {
         return false;
     }
 
+    if (userName === userToFollow) {
+        console.log("\x1b[31m%s\x1b[0m", `Error: You cannot follow yourself`);
+        return false;
+    }
+
+    if (user.following.includes(userToFollow)) {
+        console.log("\x1b[31m%s\x1b[0m", `Error: ${userName} is already following ${userToFollow}`);
+        return false;
+    }
     return true;
 }

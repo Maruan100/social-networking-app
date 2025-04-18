@@ -28,7 +28,6 @@ describe("Following", () => {
         );
     });
 
-
     it("should log an error for user that does not exist", async () => {
         const invalidInput = "Bob follows Alice";
 
@@ -50,6 +49,51 @@ describe("Following", () => {
 
         expect(logSpy).toHaveBeenCalledWith(
             "\x1b[31m%s\x1b[0m",
+            expectedOutput
+        );
+    }
+    );
+
+    it("should log an error when trying to follow yourself", async () => {
+        const validInput = "Alice follows Alice";
+        const expectedOutput = "Error: You cannot follow yourself";
+
+        await posting("Alice -> I love the weather today");
+        await following(validInput);
+
+        expect(logSpy).toHaveBeenCalledWith(
+            "\x1b[31m%s\x1b[0m",
+            expectedOutput
+        );
+    }
+    );
+
+    it("should log an error when trying to duplicate a following", async () => {
+        const validInput = "Alice follows Bob";
+        const expectedOutput = "Error: alice is already following bob";
+
+        await posting("Alice -> I love the weather today");
+        await posting("Bob -> I love the weather today");
+
+        await following(validInput);
+        await following(validInput);
+
+        expect(logSpy).toHaveBeenCalledWith(
+            "\x1b[31m%s\x1b[0m",
+            expectedOutput
+        );
+    }
+    );
+
+    it("should log the correct output when both users exist", async () => {
+        const validInput = "Bob follows Alice";
+        const expectedOutput = "Bob is now following Alice";
+
+        await posting("Alice -> I love the weather today");
+        await posting("Bob -> Damn! We lost!");
+        await following(validInput);
+
+        expect(logSpy).toHaveBeenCalledWith(
             expectedOutput
         );
     }
