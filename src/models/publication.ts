@@ -1,4 +1,5 @@
 import { timeAgo } from "../utils/time";
+import { capitalize } from "../utils/string";
 export class Publication {
     userName: string;
     text: string;
@@ -12,5 +13,9 @@ export class Publication {
 
     message(): string {
         return `${this.text} (${timeAgo(this.createdAt)})`;
+    }
+    
+    wallMessage(): string {
+        return `${capitalize(this.userName)} - ${this.text} (${timeAgo(this.createdAt)})`;
     }
 }

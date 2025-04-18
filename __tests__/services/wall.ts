@@ -44,20 +44,21 @@ describe("Wall", () => {
 
     it("should log the users wall with own publications and follows publications", async () => {
         const validInput = "Bob wall";
-        const expectedPosts = ["Alice - I love the weather today (0 seconds ago)", "Bob - Damn! We lost! (0 seconds ago)"];
+        const expectedPosts = [
+            "Alice - I love the weather today (0 seconds ago)",
+            "Bob - Damn! We lost! (0 seconds ago)"
+        ];
 
         await posting("Bob -> Damn! We lost!");
         await posting("Alice -> I love the weather today");
         await following("Bob follows Alice");
 
         await wall(validInput);
-
+    
         expect(logSpy).toHaveBeenCalledWith(
             "\x1b[32m%s\x1b[0m",
-            expectedPosts
+            expectedPosts.join('\n')
         );
     }
     );
-
-
 });
