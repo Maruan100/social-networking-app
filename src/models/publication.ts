@@ -1,3 +1,4 @@
+import { timeAgo } from "../utils/time";
 export class Publication {
     userName: string;
     text: string;
@@ -10,6 +11,6 @@ export class Publication {
     }
 
     message(): string {
-        return `${this.text} (${this.createdAt})`;
+        return `${this.text} (${timeAgo(this.createdAt)})`;
     }
 }

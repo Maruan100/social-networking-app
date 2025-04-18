@@ -35,7 +35,7 @@ describe("Posting", () => {
         expect(logSpy).toHaveBeenCalledWith("\x1b[31m%s\x1b[0m", "Error: Invalid format. Use 'user name -> text'");
     });
 
-    it("should log the input message when input is valid", async () => {
+    it("should log message when input is valid", async () => {
         const validInput = "Alice -> I love the weather today";
         const expectedOutput = "I love the weather today (0 seconds ago)";
 
