@@ -6,7 +6,7 @@
 *Local usage:*
 ```
 npm install
-NODE_ENV=local npm start
+npm start
 ```
 
 *Container usage:*
